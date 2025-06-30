@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inducción COG</title>
+    <!-- Carga de Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Estilos personalizados para la fuente Inter y ajustes generales */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* Fondo ligero */
+            color: #333;
+        }
+        /* Estilos para el menú lateral */
+        .sidebar {
+            width: 250px;
+            transform: translateX(-100%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+        }
+        .sidebar.open {
+            transform: translateX(0);
+        }
+        .overlay {
+            display: none;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+        .overlay.open {
+            display: block;
+        }
+        /* Estilo para el logo */
+        .logo {
+            max-width: 150px; /* Ajusta el tamaño del logo */
+            height: auto;
+        }
+        /* Estilos para los botones del menú */
+        .nav-button {
+            @apply block w-full text-left px-4 py-3 text-gray-700 hover:bg-gray-200 focus:outline-none focus:bg-gray-200 rounded-md;
+        }
+        /* Estilos para los títulos de sección */
+        .section-title {
+            @apply text-2xl font-bold text-blue-900 mb-4; /* Azul marino para títulos de sección */
+        }
+        /* Estilos para el contenido de las secciones */
+        .section-content {
+            @apply bg-white p-6 rounded-lg shadow-md;
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+    <!-- Barra superior (Header) -->
+    <header class="bg-blue-950 text-white p-4 flex items-center justify-between shadow-lg"> <!-- Azul marino más oscuro para el header -->
+        <button id="menu-toggle" class="text-white focus:outline-none">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        </button>
+        <h1 class="text-xl font-bold">Inducción COG</h1>
+        <div></div> <!-- Espaciador para centrar el título -->
+    </header>
+
+    <!-- Menú lateral (Sidebar) -->
+    <nav id="sidebar" class="sidebar fixed top-0 left-0 h-full bg-white shadow-xl p-4 overflow-y-auto">
+        <div class="flex justify-end mb-4">
+            <button id="close-menu" class="text-gray-600 hover:text-gray-900 focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+        <ul class="space-y-2">
+            <li><button class="nav-button" data-section="welcome">Bienvenida</button></li>
+            <li><button class="nav-button" data-section="que-es-cog">¿Qué es el COG?</button></li>
+            <li><button class="nav-button" data-section="historia">Historia</button></li>
+            <li><button class="nav-button" data-section="mision-vision-valores">Misión / Visión / Valores</button></li>
+            <li><button class="nav-button" data-section="documentos">Documentos Importantes</button></li>
+            <li><button class="nav-button" data-section="formulario">Formulario de Aceptación</button></li>
+        </ul>
+    </nav>
+
+    <!-- Overlay para el menú lateral -->
+    <div id="overlay" class="overlay fixed inset-0"></div>
+
+    <!-- Contenido principal -->
+    <main class="flex-grow p-4 md:p-8">
+        <!-- Sección de Bienvenida -->
+        <section id="welcome" class="content-section active">
+            <div class="flex flex-col items-center justify-center h-full text-center p-4">
+                <!-- Logo del COG - Se ha actualizado para usar la nueva imagen subida -->
+                <img src="image_c81405.png" alt="Logo COG" class="logo mb-6 rounded-full shadow-lg">
+                <h2 class="text-4xl font-extrabold text-blue-950 mb-4">Comité Olímpico Guatemalteco</h2> <!-- Azul marino más oscuro para el título principal -->
+                <p class="text-lg text-gray-700 max-w-2xl">
+                    ¡Bienvenido/a al equipo del Comité Olímpico Guatemalteco! Estamos emocionados de tenerte a bordo. Esta aplicación te guiará a través de información clave sobre nuestra institución y el movimiento olímpico en Guatemala.
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección ¿Qué es el COG? -->
+        <section id="que-es-cog" class="content-section hidden">
+            <div class="section-content">
+                <h3 class="section-title">¿Qué es el COG?</h3>
+                <p class="text-gray-800 mb-4">
+                    El Comité Olímpico Guatemalteco (COG) es una entidad autónoma con personalidad jurídica y patrimonio propio, que coordina las actividades olímpicas en Guatemala. Es reconocido como uno de los organismos rectores del deporte federado en Guatemala por la Constitución Política de la República.
+                </p>
+                <p class="text-gray-800">
+                    Su función principal es desarrollar, promover y proteger el Movimiento Olímpico en el país, asegurando la participación de los atletas guatemaltecos en eventos deportivos internacionales.
+                </p>
+                <!-- Comentario para personalización: Puedes añadir más detalles sobre la estructura y funciones del COG aquí. -->
+            </div>
+        </section>
+
+        <!-- Sección Historia -->
+        <section id="historia" class="content-section hidden">
+            <div class="section-content">
+                <h3 class="section-title">Historia Resumida</h3>
+                <p class="text-gray-800 mb-4">
+                    El Comité Olímpico Guatemalteco (COG) fue fundado en 1946. Poco después, el 23 de abril de 1947, fue reconocido oficialmente por el Comité Olímpico Internacional (COI), marcando el inicio formal del movimiento olímpico en el país.
+                </p>
+                <p class="text-gray-800 mb-4">
+                    Un hito importante en su historia fue en 1950, cuando bajo su coordinación, Guatemala tuvo el honor de ser sede de los VI Juegos Centroamericanos y del Caribe. Este evento consolidó la posición de Guatemala en el ámbito deportivo regional.
+                </p>
+                <p class="text-gray-800">
+                    Desde entonces, el COG ha continuado trabajando incansablemente para fomentar el deporte y los valores olímpicos en Guatemala, apoyando a generaciones de atletas.
+                </p>
+                <!-- Comentario para personalización: Puedes expandir esta sección con más fechas y eventos relevantes de la historia del COG. -->
+            </div>
+        </section>
+
+        <!-- Sección Misión / Visión / Valores -->
+        <section id="mision-vision-valores" class="content-section hidden">
+            <div class="section-content">
+                <h3 class="section-title">Misión / Visión / Valores</h3>
+                <h4 class="text-xl font-semibold text-blue-800 mb-2">Misión</h4> <!-- Azul marino para subtítulos -->
+                <p class="text-gray-800 mb-4">
+                    Desarrollar, promover y proteger el Movimiento Olímpico, articulando procesos de preparación, superación y perfeccionamiento deportivo en la búsqueda de logros y resultados que reflejen el alto rendimiento nacional.
+                </p>
+                <h4 class="text-xl font-semibold text-blue-800 mb-2">Visión</h4> <!-- Azul marino para subtítulos -->
+                <p class="text-gray-800 mb-4">
+                    La construcción conjunta de la excelencia en la gestión deportiva para el alto rendimiento.
+                </p>
+                <h4 class="text-xl font-semibold text-blue-800 mb-2">Valores</h4> <!-- Azul marino para subtítulos -->
+                <ul class="list-disc list-inside text-gray-800 space-y-1">
+                    <li>Respeto</li>
+                    <li>Excelencia</li>
+                    <li>Amistad</li>
+                    <li>Universalidad</li>
+                </ul>
+                <!-- Comentario para personalización: Rellena la sección de Valores con los principios fundamentales del COG. -->
+            </div>
+        </section>
+
+        <!-- Sección Documentos Importantes -->
+        <section id="documentos" class="content-section hidden">
+            <div class="section-content">
+                <h3 class="section-title">Documentos Importantes</h3>
+                <p class="text-gray-800 mb-4">
+                    Aquí encontrarás enlaces o información sobre documentos esenciales para tu inducción y desempeño en el COG.
+                </p>
+                <ul class="list-disc list-inside text-gray-800 space-y-2">
+                    <li><a href="#" class="text-blue-700 hover:underline">Reglamento Interno de Trabajo</a> (Enlace o marcador de posición)</li> <!-- Azul más oscuro para enlaces -->
+                    <li><a href="#" class="text-blue-700 hover:underline">Manual de Bienvenida y Procedimientos</a> (Enlace o marcador de posición)</li>
+                    <li><a href="#" class="text-blue-700 hover:underline">Código de Ética y Conducta</a> (Enlace o marcador de posición)</li>
+                    <li><a href="#" class="text-blue-700 hover:underline">Políticas de Seguridad y Salud Ocupacional</a> (Enlace o marcador de posición)</li>
+                </ul>
+                <p class="text-gray-600 mt-4 text-sm">
+                    Para acceder a los documentos completos, por favor, consulta con el departamento de Recursos Humanos.
+                </p>
+                <!-- Comentario para personalización: Reemplaza los '#' con las URLs reales de los documentos o añade más descripciones. -->
+            </div>
+        </section>
+
+        <!-- Sección Formulario de Aceptación -->
+        <section id="formulario" class="content-section hidden">
+            <div class="section-content">
+                <h3 class="section-title">Formulario de Aceptación</h3>
+                <p class="text-gray-800 mb-6">
+                    Por favor, confirma que has leído y comprendido la información proporcionada.
+                </p>
+                <form id="acceptance-form" class="space-y-4">
+                    <div>
+                        <input type="checkbox" id="understood-checkbox" class="mr-2 rounded text-blue-700 focus:ring-blue-600"> <!-- Azul más oscuro para checkbox -->
+                        <label for="understood-checkbox" class="text-gray-800">He leído y comprendido toda la información.</label>
+                    </div>
+                    <div>
+                        <label for="employee-name" class="block text-gray-700 text-sm font-bold mb-2">Nombre Completo:</label>
+                        <input type="text" id="employee-name" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Tu nombre completo" required>
+                    </div>
+                    <div>
+                        <label for="acceptance-date" class="block text-gray-700 text-sm font-bold mb-2">Fecha:</label>
+                        <input type="date" id="acceptance-date" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                    </div>
+                    <div>
+                        <label for="signature" class="block text-gray-700 text-sm font-bold mb-2">Firma Simulada (escribe tu nombre):</label>
+                        <input type="text" id="signature" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" placeholder="Escribe tu nombre para firmar" required>
+                    </div>
+                    <button type="submit" class="bg-blue-700 hover:bg-blue-800 text-white font-bold py-2 px-4 rounded-md focus:outline-none focus:shadow-outline transition duration-300 ease-in-out"> <!-- Azul más oscuro para el botón -->
+                        Enviar Aceptación
+                    </button>
+                    <div id="form-message" class="mt-4 text-center text-sm"></div>
+                </form>
+                <div id="acceptance-status" class="mt-6 p-4 bg-green-100 border border-green-400 text-green-700 rounded-md hidden">
+                    <p class="font-bold">¡Aceptación registrada!</p>
+                    <p id="recorded-name"></p>
+                    <p id="recorded-date"></p>
+                    <p id="recorded-signature"></p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        // Obtener referencias a elementos del DOM
+        const menuToggle = document.getElementById('menu-toggle');
+        const closeMenu = document.getElementById('close-menu');
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('overlay');
+        const navButtons = document.querySelectorAll('.nav-button');
+        const contentSections = document.querySelectorAll('.content-section');
+        const acceptanceForm = document.getElementById('acceptance-form');
+        const understoodCheckbox = document.getElementById('understood-checkbox');
+        const employeeNameInput = document.getElementById('employee-name');
+        const acceptanceDateInput = document.getElementById('acceptance-date');
+        const signatureInput = document.getElementById('signature');
+        const formMessage = document.getElementById('form-message');
+        const acceptanceStatus = document.getElementById('acceptance-status');
+        const recordedName = document.getElementById('recorded-name');
+        const recordedDate = document.getElementById('recorded-date');
+        const recordedSignature = document.getElementById('recorded-signature');
+
+        // Función para abrir el menú lateral
+        function openSidebar() {
+            sidebar.classList.add('open');
+            overlay.classList.add('open');
+        }
+
+        // Función para cerrar el menú lateral
+        function closeSidebar() {
+            sidebar.classList.remove('open');
+            overlay.classList.remove('open');
+        }
+
+        // Event listener para abrir el menú al hacer clic en el botón de la barra superior
+        menuToggle.addEventListener('click', openSidebar);
+
+        // Event listener para cerrar el menú al hacer clic en el botón de cerrar o en el overlay
+        closeMenu.addEventListener('click', closeSidebar);
+        overlay.addEventListener('click', closeSidebar);
+
+        // Función para mostrar una sección y ocultar las demás
+        function showSection(sectionId) {
+            contentSections.forEach(section => {
+                if (section.id === sectionId) {
+                    section.classList.remove('hidden');
+                    section.classList.add('active'); // Añade clase 'active' para la sección visible
+                } else {
+                    section.classList.add('hidden');
+                    section.classList.remove('active'); // Remueve clase 'active' de las secciones ocultas
+                }
+            });
+            closeSidebar(); // Cierra el menú después de seleccionar una sección
+        }
+
+        // Event listeners para los botones de navegación
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const sectionId = button.dataset.section;
+                showSection(sectionId);
+            });
+        });
+
+        // Manejo del formulario de aceptación
+        acceptanceForm.addEventListener('submit', (event) => {
+            event.preventDefault(); // Previene el envío por defecto del formulario
+
+            // Validación del checkbox "He leído y comprendido"
+            if (!understoodCheckbox.checked) {
+                formMessage.textContent = 'Por favor, marca la casilla "He leído y comprendido" para continuar.';
+                formMessage.className = 'mt-4 text-center text-sm text-red-600';
+                return;
+            }
+
+            // Recopilar datos del formulario
+            const employeeName = employeeNameInput.value;
+            const acceptanceDate = acceptanceDateInput.value;
+            const signature = signatureInput.value;
+
+            // Crear un objeto con los datos de aceptación
+            const acceptanceData = {
+                name: employeeName,
+                date: acceptanceDate,
+                signature: signature,
+                timestamp: new Date().toISOString() // Guarda la marca de tiempo para registro
+            };
+
+            // Guardar en LocalStorage
+            try {
+                localStorage.setItem('cogAcceptance', JSON.stringify(acceptanceData));
+                formMessage.textContent = '¡Aceptación enviada y guardada localmente!';
+                formMessage.className = 'mt-4 text-center text-sm text-green-600';
+
+                // Mostrar el estado de aceptación
+                recordedName.textContent = `Nombre: ${employeeName}`;
+                recordedDate.textContent = `Fecha: ${acceptanceDate}`;
+                recordedSignature.textContent = `Firma: ${signature}`;
+                acceptanceStatus.classList.remove('hidden');
+
+                // Opcional: Deshabilitar el formulario después de la aceptación
+                acceptanceForm.querySelector('button[type="submit"]').disabled = true;
+                understoodCheckbox.disabled = true;
+                employeeNameInput.disabled = true;
+                acceptanceDateInput.disabled = true;
+                signatureInput.disabled = true;
+
+            } catch (e) {
+                formMessage.textContent = 'Error al guardar la aceptación. Por favor, inténtalo de nuevo.';
+                formMessage.className = 'mt-4 text-center text-sm text-red-600';
+                console.error('Error saving to LocalStorage:', e);
+            }
+        });
+
+        // Cargar estado de aceptación al iniciar la aplicación
+        function loadAcceptanceStatus() {
+            const storedAcceptance = localStorage.getItem('cogAcceptance');
+            if (storedAcceptance) {
+                try {
+                    const acceptanceData = JSON.parse(storedAcceptance);
+                    recordedName.textContent = `Nombre: ${acceptanceData.name}`;
+                    recordedDate.textContent = `Fecha: ${acceptanceData.date}`;
+                    recordedSignature.textContent = `Firma: ${acceptanceData.signature}`;
+                    acceptanceStatus.classList.remove('hidden');
+
+                    // Deshabilitar el formulario si ya hay una aceptación guardada
+                    acceptanceForm.querySelector('button[type="submit"]').disabled = true;
+                    understoodCheckbox.checked = true;
+                    understoodCheckbox.disabled = true;
+                    employeeNameInput.value = acceptanceData.name;
+                    employeeNameInput.disabled = true;
+                    acceptanceDateInput.value = acceptanceData.date;
+                    acceptanceDateInput.disabled = true;
+                    signatureInput.value = acceptanceData.signature;
+                    signatureInput.disabled = true;
+                    formMessage.textContent = 'Ya has completado el formulario de aceptación.';
+                    formMessage.className = 'mt-4 text-center text-sm text-blue-600';
+
+                } catch (e) {
+                    console.error('Error parsing LocalStorage data:', e);
+                    localStorage.removeItem('cogAcceptance'); // Limpiar datos corruptos
+                }
+            }
+        }
+
+        // Cargar el estado de aceptación al cargar la página
+        document.addEventListener('DOMContentLoaded', loadAcceptanceStatus);
+
+        // Asegura que la sección de bienvenida se muestre al cargar la página
+        document.addEventListener('DOMContentLoaded', () => {
+            showSection('welcome');
+        });
+    </script>
+</body>
+</html>
